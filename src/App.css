@@ -13,7 +13,7 @@ body {
     rgba(100, 115, 255, 1) 100%
   );
 }
-.todo-app {
+.main-todo {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -48,9 +48,10 @@ h1 {
 
 .todo-form {
   margin-bottom: 32px;
+  margin-right: 280px;
 }
 
-.todo-input {
+.todo-text {
   padding: 14px 32px 14px 16px;
   border-radius: 4px 0 0 4px;
   border: 2px solid rgba(17, 122, 255, 1);
@@ -58,7 +59,7 @@ h1 {
   width: 320px;
 }
 
-.todo-button {
+.todo-btn {
   padding: 16px;
   border: none;
   border-radius: 0 4px 4px 0;
@@ -95,16 +96,96 @@ h1 {
   width: 90%;
 }
 
-.iconsContainer {
+.btn-container {
   display: flex;
   align-items: center;
   font-size: 24px;
   cursor: pointer;
 }
 
-.seperator {
+.separator {
   height: 1px;
   width: 80%;
   align-self: center;
   background-color: black;
+}
+
+.accordion_container {
+  width: 300px;
+  background-color: #efefef;
+  box-shadow: 8px 8px 7px #454545;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 3px solid black;
+}
+
+.accordion-btn {
+  width: 100%;
+  height: 50px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #ffda75;
+}
+
+.show_content {
+  height: 150px;
+  opacity: 1;
+  visibility: visible;
+  transition: height 0.3s ease-out;
+}
+
+.list-item-container {
+  width: 100%;
+  height: 50px;
+  padding-left: 15px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border-top: 1px solid #a8a8a8;
+}
+
+ .list-item-container:first-of-type {
+  border-top: 3px solid black;
+}
+
+.list-item-container p {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.list-item-container:hover > p {
+  color: #0072c9;
+
+}
+
+
+:root {
+  --select-border: rgba(17, 122, 255, 1);
+  --select-focus: blue;
+  --select-arrow: var(--select-border);
+}
+
+.category-list {
+  position: absolute;
+  right: 550px;
+  width: 15%;
+  min-width: 15ch;
+  max-width: 30ch;
+  border: 2px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.46em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }

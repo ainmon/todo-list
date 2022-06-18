@@ -6,9 +6,20 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
 
     const [text, setText] = useState("");
 
+    function findID(c){
+        categories.map((z) => {
+            console.log(c.target.value)
+            console.log(z)
+            if(c.target.value === z.category_name)
+            setCategory(z.id)
+            else console.log('category not found')
+        })
+        return null;
+    }
 
     function grabCategory(e){
-        setCategory(e)
+        findID(e)
+        console.log(category)
     }
     
     function handleSubmit(e){
@@ -47,11 +58,12 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
     })
     
 
-    // const categoryList = categories.map((c) => {
-    //     return (
-    //         <option value={c.category_name} key={c.id} onClick={grabCategory}>{c.category_name}</option>
-    //     )
-    // })
+     const categoryList = categories.map((c) => {
+
+         return (
+            <option value={c.category_name} key={c.id}>{c.category_name}</option>
+         )
+     })
 
 
     
@@ -62,7 +74,7 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
         <form onSubmit={handleSubmit} className="todo-form">
             <input type="text" name="task" value={task} onChange={(e) => setText(e.target.value)} className="todo-text" placeholder="Create a new task!" />
             <button type="submit" className="todo-btn">Add Todo!</button>
-            <input type="text "name="category" value={category}  className="category-list" placeholder="Enter a category"/>
+            <select className="select-box" onChange={(event) => grabCategory(event)}>{categoryList}</select>
         </form>
         </>
     )

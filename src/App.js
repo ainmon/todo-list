@@ -31,7 +31,7 @@ function App() {
     console.log(todos)
     console.log(categories)
     // set it to current todo state
-  }, [])
+  }, [selectedTodo])
 
 
   function getData(){
@@ -106,6 +106,7 @@ function App() {
     setSelectedTodo({
       ...selectedTodo,
       [name]: value,
+      //[todo.task_id]: category
     });
   }
 

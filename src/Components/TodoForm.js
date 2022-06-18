@@ -2,7 +2,7 @@ import { useState } from "react"
 import Popup from "./Popup";
 
 
-function TodoForm({prompt, addTodo, setSelectedTodo, category, setCategory, categories, selectedTodo, onChangeForm, handleCategoryChange, editTodo, todo}) {
+function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories, selectedTodo, onChangeForm, handleCategoryChange, editTodo, todo}) {
 
     const [text, setText] = useState("");
 
@@ -26,20 +26,12 @@ function TodoForm({prompt, addTodo, setSelectedTodo, category, setCategory, cate
         // .then(editTodo(todo));
 
         // addTodo(todo) causes major issue with text showing up wonky
-        addTodo(task)
+        console.log(text)
+        addTodo(text)
         setSelectedTodo(null)
         setText("")
     }
     
-    function handleInputChange(event) {
-        console.log(event.target.value)
-        onChangeForm(event.target.name, event.target.value);
-    }
-
-    function handleCategoryEdit(event) {
-        console.log(event.target.value)
-        handleCategoryChange(event.target.id, event.target.value)
-    }
 
     if (!todo) return null;
 
@@ -68,10 +60,9 @@ function TodoForm({prompt, addTodo, setSelectedTodo, category, setCategory, cate
     return (
         <>
         <form onSubmit={handleSubmit} className="todo-form">
-            <input type="text" name="task" value={todo.task} onChange={handleInputChange} className="todo-text" placeholder="Create a new task!" />
+            <input type="text" name="task" value={task} onChange={(e) => setText(e.target.value)} className="todo-text" placeholder="Create a new task!" />
             <button type="submit" className="todo-btn">Add Todo!</button>
-            <button type="submit" className="filter-btn">Filter</button>
-            <input type="text "name="category" value={category} onChange={handleCategoryEdit} className="category-list" placeholder="Enter a category"/>
+            <input type="text "name="category" value={category}  className="category-list" placeholder="Enter a category"/>
         </form>
         </>
     )

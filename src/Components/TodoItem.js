@@ -27,12 +27,12 @@ function TodoItem({ setPrompt, todo, removeTodo, category, setCategory, selectTo
 
     return (
         <div className={todo.completed ? "todo-row-true" : "todo-row"} style={todo.important ? {background: "orange"} : {}}>
-            {todo.task === "" ? "No Name Given" : todo.task}
+            {task === "" ? "No Name Given" : task}
             {todo.category}
             <span className="category-id">Category: {task_id !== null ? findCategory : "No Category"}</span>
             <div className="btn-container">
                 <button onClick={handleClick} className="important-btn">E</button>
-                <BiCheckCircle onClick={() => removeTodo(todo.id)}/>
+                <BiCheckCircle onClick={() => removeTodo(id)}/>
             </div>
         </div>
     )

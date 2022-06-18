@@ -51,12 +51,13 @@ function App() {
     let id = 1;
     if(todos.length > 0){
      // id = todos[0].id + 1
-      id = todos[todos.length - 1].id + 1
+      id = todos[0].id + 1
     }
     let todo = {id: id, text: text, completed: false, category: ""}
 
-    setTodos([...todos, todo])
-    debugger
+    let newTodos = [...todos, todo]
+    console.log(newTodos)
+    setTodos(newTodos)
 
     fetch('http://localhost:9292/todos', {
             method: "POST",
@@ -121,9 +122,9 @@ function App() {
 
   return (
     <div className="main-todo">
-      {editState ? <Popup editState={editState} setEditState={setEditState} todo={selectedTodo}/> : null}
+      {editState ? <Popup editState={editState} setEditState={setEditState} todo={selectedTodo} onChangeForm={handleChangeForm}/> : null}
       <h1>Todo List</h1>
-      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setSelectedTodo={setSelectedTodo} setCategory={setCategory} selectedTodo={selectedTodo} onChangeForm={handleChangeForm} todo={selectedTodo}/>
+      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setSelectedTodo={setSelectedTodo} setCategory={setCategory} selectedTodo={selectedTodo} todo={selectedTodo}/>
       <hr className='separator'/>
       {todos.map((todo) => {
         return (

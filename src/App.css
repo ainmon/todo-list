@@ -20,6 +20,7 @@ body {
   width: 45%;
   min-height: 600px;
   background: white;
+  box-shadow: 3px 30px 40px rgb(27, 27, 27);
   text-align: center;
   margin: 128px auto;
   border-radius: 10px;
@@ -40,6 +41,7 @@ body {
 h1 {
   margin: 32px 0;
   font-size: 33px;
+  text-shadow: 3px 7px 10px rgb(249, 251, 255);
 }
 
 .complete {
@@ -85,6 +87,8 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin: 4px auto;
+  box-shadow: 2px 4px 10px rgb(94, 92, 92);
+  text-shadow: 2px 4px 5px rgb(105, 105, 105);
   color: white;
   background: linear-gradient(
     90deg,

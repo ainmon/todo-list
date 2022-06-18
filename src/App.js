@@ -16,26 +16,23 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [categories, setCategories] = useState([])
-  const [prompt, setPrompt] = useState(false);
+  const [editState, setEditState] = useState(false)
   const [selectedTodo, setSelectedTodo] = useState(null)
   const [category, setCategory] = useState(null)
 
 
+  
+
   useEffect(() => {
     // fetch user's list
-    setCategories(["Business", "Education", "Fitness"])
+    fetchCat();
     getData();
+    setSelectedTodo(todos)
+    console.log(todos)
+    console.log(categories)
     // set it to current todo state
   }, [])
 
-  useEffect(() => {
-
-    
-
-  }, [todos])
-
-
-  console.log(todos)
 
   function getData(){
     fetch('http://localhost:9292/todos')
@@ -43,13 +40,20 @@ function App() {
     .then((res) => setTodos(res))
   }
 
+  function fetchCat(){
+    fetch('http://localhost:9292/categories')
+    .then((r) => r.json())
+    .then((res) => setCategories(res))
+  }
+
+
   const addTodo = (text) => {
     let id = 1;
     if(todos.length > 0){
      // id = todos[0].id + 1
       id = todos[todos.length - 1].id + 1
     }
-    let todo = {id: id, text: text, completed: false, important: false, category: ""}
+    let todo = {id: id, text: text, completed: false, category: ""}
 
     setTodos([...todos, todo])
     debugger
@@ -60,7 +64,6 @@ function App() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                id: id,
                 task: text,
             }),
         })
@@ -73,38 +76,7 @@ function App() {
 
   }
 
-  let num = 1
 
-  const giveCategory = (id) => {
-
-
-    const categoryInfo = {
-      task_id: category
-    }
-
-    // fetch update
-    setSelectedTodo(id)
-    console.log('click!')
-    console.log(id)
-    console.log(selectedTodo)
-
-    // for update method
-    // fetch patch request
-    // push body data to whatever grabbed id was
-    // profit
-    fetch(`http://localhost:9292/todos/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(category),
-        })
-        .then((r) => r.json())
-        .then((task) => console.log(task))
-    
-
-    setPrompt(true);
-}
 
   const removeTodo = (id) => {
 
@@ -122,24 +94,26 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  const completeTodo = (id) => {
-    let updatedTodos = todos.map((todo) => {
-      if(todo.id === id){
-        todo.completed = !todo.completed
-      }
-      return todo
-    })
-    setTodos(updatedTodos)
+  
+  
+
+
+  
+
+  function handleChangeForm(name, value) {
+    console.log(name, value)
+    setSelectedTodo({
+      ...selectedTodo,
+      [name]: value,
+    });
   }
 
-  const importantTodo = (id) => {
-    let updatedTodos = todos.map((todo) => {
-      if(todo.id === id) {
-        todo.important = !todo.important
-      }
-      return todo
-    })
+  function editTodo(updatedTodo){
 
+    const updatedTodos = todos.map((todo) =>
+      todo.id === updatedTodo.id ? updatedTodo : todo)
+
+    setSelectedTodo(updatedTodo)
     setTodos(updatedTodos)
   }
 
@@ -147,13 +121,13 @@ function App() {
 
   return (
     <div className="main-todo">
-      <Popup prompt={prompt} setPrompt={setPrompt}/>
+      {editState ? <Popup editState={editState} setEditState={setEditState} todo={selectedTodo}/> : null}
       <h1>Todo List</h1>
-      <TodoForm addTodo={addTodo} category={category} categories={categories} setCategory={setCategory}/>
+      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setSelectedTodo={setSelectedTodo} setCategory={setCategory} selectedTodo={selectedTodo} onChangeForm={handleChangeForm} todo={selectedTodo}/>
       <hr className='separator'/>
       {todos.map((todo) => {
         return (
-          <TodoItem removeTodo={removeTodo} completeTodo={completeTodo} giveCategory={giveCategory} todo={todo} key={todo.id}/>
+          <TodoItem setCategory={setCategory} category={category} removeTodo={removeTodo} editTodo={editTodo} todo={todo} key={todo.id} selectTodo={setSelectedTodo} categories={categories} editState={editState} setEditState={setEditState}/>
         )
       })}
       

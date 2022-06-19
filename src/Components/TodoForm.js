@@ -10,8 +10,10 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
         categories.map((z) => {
             console.log(c.target.value)
             console.log(z)
-            if(c.target.value === z.category_name)
-            setCategory(z.id)
+            if(c.target.value === z.category_name){   
+                setCategory(z.id)
+                console.log(z.id)
+            }
             else console.log('category not found')
         })
         return null;
@@ -19,22 +21,10 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
 
     function grabCategory(e){
         findID(e)
-        console.log(category)
     }
     
     function handleSubmit(e){
         e.preventDefault();
-
-        // console.log(todo, id)
-        // fetch(`http://localhost:9292/todos/${id}`, {
-        // method: "PATCH",
-        // headers: {
-        //     "Content-Type": "application/json",
-        // },
-        // body: JSON.stringify(todo),
-        // })
-        // .then((r) => r.json())
-        // .then(editTodo(todo));
 
         // addTodo(todo) causes major issue with text showing up wonky
         console.log(text)
@@ -44,18 +34,7 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
     }
     
 
-    if (!todo) return null;
-
-    const {task, task_id, id} = selectedTodo;
     
-    const findCategory = categories.map((c) => {
-        if(c.id === task_id){
-            console.log(c.category_name)
-            return <p>
-                {c.category_name}
-            </p>
-        }
-    })
     
 
      const categoryList = categories.map((c) => {
@@ -72,7 +51,7 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
     return (
         <>
         <form onSubmit={handleSubmit} className="todo-form">
-            <input type="text" name="task" value={task} onChange={(e) => setText(e.target.value)} className="todo-text" placeholder="Create a new task!" />
+            <input type="text" name="task" value={todo ? todo.task : null} onChange={(e) => setText(e.target.value)} className="todo-text" placeholder="Create a new task!" />
             <button type="submit" className="todo-btn">Add Todo!</button>
             <select className="select-box" onChange={(event) => grabCategory(event)}>{categoryList}</select>
         </form>

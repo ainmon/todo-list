@@ -3,15 +3,9 @@ import { useEffect, useState } from 'react';
 import TodoForm from './Components/TodoForm';
 import TodoItem from './Components/TodoItem';
 import Popup from './Components/Popup';
-import CategoryMenu from './Components/CategoryMenu';
+
 
 function App() {
-
-  // need to incorporate fetched list from backend
-  // all functions need to include CRUD stuff
-
-  // popup form will handle edit function
-  // incorporate edit button on todo
 
 
   const [todos, setTodos] = useState([]);
@@ -19,20 +13,26 @@ function App() {
   const [editState, setEditState] = useState(false)
   const [selectedTodo, setSelectedTodo] = useState(null)
   const [category, setCategory] = useState(null)
+  const [submitAction, setSubmitAction] = useState(false)
 
 
-  
+
 
   useEffect(() => {
     // fetch user's list
     fetchCat();
     getData();
-    setSelectedTodo(todos)
+    console.log(selectedTodo)
     console.log(todos)
     console.log(categories)
     // set it to current todo state
-  }, [selectedTodo])
+    //setting dependancy to selectedTodo will update list in real time but is causing an issue with popup info being loaded correctly
+    //submitAction will be essentially a tool to force a refresh anytime a request is made to the backend
+  }, [submitAction])
 
+  function handleRefresh(){
+    setSubmitAction(!submitAction)
+  }
 
   function getData(){
     fetch('http://localhost:9292/todos')
@@ -53,7 +53,7 @@ function App() {
      // id = todos[0].id + 1
       id = todos[0].id + 1
     }
-    let todo = {id: id, text: text, completed: false, category: ""}
+    let todo = {id: id, text: text, completed: false, category: "", task_id: category}
 
     let newTodos = [...todos, todo]
     console.log(newTodos)
@@ -66,18 +66,17 @@ function App() {
             },
             body: JSON.stringify({
                 task: text,
+                task_id: category
             }),
         })
         .then((r) => r.json())
         .then((task) => {
           console.log(task)
           setTodos([...todos, todo])
-        
+          handleRefresh();
         })
 
   }
-
-
 
   const removeTodo = (id) => {
 
@@ -96,17 +95,14 @@ function App() {
   }
 
   
-  
 
 
-  
-
-  function handleChangeForm(name, value) {
+  function handleChangeForm(name, value, task_id, category_id) {
     console.log(name, value)
     setSelectedTodo({
       ...selectedTodo,
       [name]: value,
-      //[todo.task_id]: category
+      [task_id]: category_id,
     });
   }
 
@@ -117,15 +113,16 @@ function App() {
 
     setSelectedTodo(updatedTodo)
     setTodos(updatedTodos)
+    handleRefresh();
   }
 
   
 
   return (
     <div className="main-todo">
-      {editState ? <Popup editState={editState} setEditState={setEditState} todo={selectedTodo} onChangeForm={handleChangeForm}/> : null}
+      {editState ? <Popup setTodo={setSelectedTodo} setCategory={setCategory} editTodo={editTodo} editState={editState} setEditState={setEditState} selectedTodo={selectedTodo} onChangeForm={handleChangeForm} category={category} categories={categories}/> : null}
       <h1>Todo List</h1>
-      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setSelectedTodo={setSelectedTodo} setCategory={setCategory} selectedTodo={selectedTodo} todo={selectedTodo}/>
+      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setCategory={setCategory} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} todo={selectedTodo}/>
       <hr className='separator'/>
       {todos.map((todo) => {
         return (

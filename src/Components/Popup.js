@@ -22,12 +22,14 @@ function Popup({ setCategory, editTodo, editState, setEditState, selectedTodo, s
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            task: text
+            task: text,
+            task_id: category
         }),
         })
         .then((r) => r.json())
         .then(editTodo(selectedTodo))
-        .then(setTodo(null));
+        .then(setTodo(null))
+        .then(setText(""))
 
         console.log(selectedTodo)
         setEditState(false)
@@ -70,7 +72,7 @@ function Popup({ setCategory, editTodo, editState, setEditState, selectedTodo, s
             <div className="popup-inner">
                 <form className='edit-form' onSubmit={handleClose}>
                     <div className='task-header'>
-                        <header>Task:</header>
+                        <header className='task-pop'>Task:</header>
                         <input type="text" onChange={handleInputChange} value={text} className="task-input" />
                     </div>
                     <div className='category-header'>

@@ -28,6 +28,7 @@
 .popup-inner{
     position: flex;
     padding: 32px;
+    height: 30%;
     width: 100%;
     max-width: 640px;
     border-radius: 16px;
@@ -54,4 +55,38 @@
     border-radius: 5px;
     color: white;
     text-shadow: 3px 7px 10px black;
+}
+
+.task-pop{
+    color: white;
+}
+
+.task-input{
+    height: 40px;
+    width: 250px;
+    border-radius: 5px;
+    max-width: 100%;
+    border-color: black;
+}
+
+.category-header{
+    position: absolute;
+    bottom: 70px;
+    right: -50%;
+}
+
+.close-btn{
+  position: absolute;
+  padding: 16px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgba(17, 122, 255, 1) 0%,
+    rgba(20, 159, 255, 1) 100%
+  );
+  color: white;
+  text-transform: capitalize;
 }

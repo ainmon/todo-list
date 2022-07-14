@@ -2,7 +2,7 @@ import { useState } from "react"
 import Popup from "./Popup";
 
 
-function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories, selectedTodo, onChangeForm, handleCategoryChange, editTodo, todo}) {
+function TodoForm({ addTodo, setSelectedTodo, setCategory, categories, todo, handleRefresh}) {
 
     const [text, setText] = useState("");
 
@@ -30,7 +30,7 @@ function TodoForm({ addTodo, setSelectedTodo, category, setCategory, categories,
         console.log(text)
         addTodo(text)
         setSelectedTodo(null)
-        setText("")
+        handleRefresh();
     }
     
 

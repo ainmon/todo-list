@@ -122,7 +122,7 @@ function App() {
     <div className="main-todo">
       {editState ? <Popup setTodo={setSelectedTodo} setCategory={setCategory} editTodo={editTodo} editState={editState} setEditState={setEditState} selectedTodo={selectedTodo} onChangeForm={handleChangeForm} category={category} categories={categories}/> : null}
       <h1>Todo List</h1>
-      <TodoForm editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setCategory={setCategory} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} todo={selectedTodo}/>
+      <TodoForm handleRefresh={handleRefresh} editTodo={editTodo} addTodo={addTodo} category={category} categories={categories} setCategory={setCategory} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} todo={selectedTodo}/>
       <hr className='separator'/>
       {todos.map((todo) => {
         return (
